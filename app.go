@@ -8,6 +8,8 @@ import (
 	"os/signal"
 	"time"
 	"syscall"
+
+	"github.com/alvintzz/nyanyangku/ui"
 )
 
 func PongHandler(w http.ResponseWriter, r *http.Request) {
@@ -19,7 +21,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte("pung"))
+	log.Println("DSA")
 }
 
 func initHandler(mux *http.ServeMux) {
@@ -31,6 +33,8 @@ func main() {
 	//Create a mux for routing incoming requests
 	mux := http.NewServeMux()
 	initHandler(mux)
+	ui.InitHandler(mux, config.Settings.TemplateDir)
+	ui.InitDb(masterDB)
 
 	//Handle Static file (css/js) request
 	fs := http.FileServer(http.Dir(config.Settings.PublicDir))

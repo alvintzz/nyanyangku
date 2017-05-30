@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"database/sql"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -17,6 +18,8 @@ type Db struct {
 type Tx struct {
 	Transaction *sqlx.Tx
 }
+
+var ErrNoRows = sql.ErrNoRows
 
 //Connect to database from config and Ping the connection
 func Connect(dbType, dbConn string) (*Db, error) {
@@ -37,6 +40,10 @@ func Connect(dbType, dbConn string) (*Db, error) {
 	}
 
 	return database, nil
+}
+
+func (d *Db) DoAction() (*sqlx.DB) {
+	return d.Connection
 }
 
 func (d *Db) StartTransaction() (*Tx, error) {

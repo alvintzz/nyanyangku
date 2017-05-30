@@ -7,7 +7,8 @@ import (
 
 	"gopkg.in/gcfg.v1"
 
-	"github.com/alvintzz/nyanyangku/src/common/database"
+	"github.com/alvintzz/nyanyangku/common/database"
+	"github.com/alvintzz/nyanyangku/common/render"
 )
 
 var environment string
@@ -36,6 +37,12 @@ func init() {
 	if err != nil {
 		log.Fatal("Failed to connect to database. Error:", err)
 	}
+
+	//Initialize Templating Engine
+	err = render.Init("main", config.Settings.TemplateDir)
+	if err != nil {
+		log.Fatal("Failed to create main templating.")
+	}
 }
 
 type Configs struct {
@@ -43,9 +50,10 @@ type Configs struct {
 	Databases ConfigDB
 }
 type ConfigSetting struct {
-	SelfURL   string
-	SelfPort  string
-	PublicDir string
+	SelfURL     string
+	SelfPort    string
+	PublicDir   string
+	TemplateDir string
 }
 type ConfigDB struct {
 	Conn string
