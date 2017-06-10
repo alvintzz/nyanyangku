@@ -10,7 +10,7 @@ import (
 
 //Container for all user related object.
 type UserModel struct {
-	Database *database.Db
+	Database database.Db
 }
 
 type User struct {
@@ -26,7 +26,7 @@ type User struct {
 }
 
 // NewUserModel instantiates a new UserModel used for get/create user
-func NewUserModel(db *database.Db) *UserModel {
+func NewUserModel(db database.Db) *UserModel {
 	return &UserModel{
 		Database: db,
 	}

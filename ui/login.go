@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/alvintzz/nyanyangku/model"
+	"github.com/alvintzz/nyanyangku/common/database"
 )
 
 func LoginFormHandler(w http.ResponseWriter, r *http.Request) (string, map[string]interface{}, error) {
@@ -24,6 +25,7 @@ func LoginActionAjaxHandler(w http.ResponseWriter, r *http.Request) (interface{}
 	userPassword := r.FormValue("input_password")
 	login := UserLogin{}
 
+	masterDB, _ := database.Get("main")
 	userModel := model.NewUserModel(masterDB)
 	user, err := userModel.GetUserByEmail(userEmail)
 	if err != nil {
@@ -31,11 +33,9 @@ func LoginActionAjaxHandler(w http.ResponseWriter, r *http.Request) (interface{}
 		return login, err
 	}
 	if user.ID == 0 {
-		log.Println("User Not found")
 		return login, fmt.Errorf("User Not found")
 	}
 	if user.Password != userPassword {
-		log.Println("Wrong Password")
 		return login, fmt.Errorf("Wrong Password")
 	}
 

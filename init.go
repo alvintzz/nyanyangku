@@ -13,7 +13,6 @@ import (
 
 var environment string
 var config Configs
-var masterDB *database.Db
 
 func init() {
 	var err error
@@ -33,7 +32,7 @@ func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	//Initialize database connection
-	masterDB, err = database.Connect(config.Databases.Type, config.Databases.Conn)
+	err = database.Connect("main", config.Databases.Type, config.Databases.Conn)
 	if err != nil {
 		log.Fatal("Failed to connect to database. Error:", err)
 	}

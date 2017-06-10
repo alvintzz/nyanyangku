@@ -34,8 +34,7 @@ func main() {
 	mux := http.NewServeMux()
 	initHandler(mux)
 	ui.InitHandler(mux, config.Settings.TemplateDir)
-	ui.InitDb(masterDB)
-
+	
 	//Handle Static file (css/js) request
 	fs := http.FileServer(http.Dir(config.Settings.PublicDir))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
