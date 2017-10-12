@@ -33,10 +33,10 @@ func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	//Initialize database connection
-	masterDB, err = database.Connect(config.Databases.Type, config.Databases.Conn)
-	if err != nil {
-		log.Fatal("Failed to connect to database. Error:", err)
-	}
+	//masterDB, err = database.Connect(config.Databases.Type, config.Databases.Conn)
+	//if err != nil {
+	//	log.Fatal("Failed to connect to database. Error:", err)
+	//}
 
 	//Initialize Templating Engine
 	err = render.Init("main", config.Settings.TemplateDir)
